@@ -6,9 +6,7 @@ from yt_dlp import YoutubeDL
 from urllib.parse import urlparse, parse_qs
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
-import ffmpeg
 import platform
-import subprocess
 import shutil
 
 
@@ -538,9 +536,9 @@ def download_single_video(url: str, output_path: str, thread_id: int = 0, audio_
     # Set different output templates for playlists, channels and single videos
     content_type, cached_info = get_url_info(url)
 
-    # Debug: Print detection result
+    # Log content type for user awareness
     if thread_id == 1:  # Only print for first thread to avoid spam
-        print(f"🔍 [Debug] URL analysis: {content_type.title()}")
+        print(f"🔍 Content detected: {content_type.title()}")
 
     if content_type == 'playlist':
         ydl_opts['outtmpl'] = os.path.join(
@@ -632,6 +630,9 @@ def download_youtube_content(urls: List[str], output_path: Optional[str] = None,
 
     # If user wants to list formats, do that for the first URL and return
     if list_formats:
+        if not urls:
+            print("❌ No URLs provided for format listing.")
+            return
         print("Available formats for the first provided URL:")
         get_available_formats(urls[0])
         return
@@ -768,13 +769,13 @@ if __name__ == "__main__":
 
         if not urls_input.strip():
             print("❌ No URLs entered. Exiting...")
-            exit(1)
+            sys.exit(1)
 
         urls = parse_multiple_urls(urls_input)
 
         if not urls:
             print("❌ No valid YouTube URLs found. Please try again.")
-            exit(1)
+            sys.exit(1)
 
         print(f"\n✅ Found {len(urls)} valid URL(s)")
         for i, url in enumerate(urls, 1):
