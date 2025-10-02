@@ -1,12 +1,12 @@
 # 🎬 Advanced YouTube Downloader
 
-**Professional YouTube Content Downloader with Interactive Quality Selection**
+**Professional YouTube Content Downloader with One-Click Setup and Interactive Quality Selection**
 
 ## 🚀 About This Project
 
-A powerful, feature-rich YouTube downloader that puts you in complete control of your downloads. Choose your exact video quality, download entire playlists or channels, and enjoy lightning-fast concurrent processing.
+A powerful, feature-rich YouTube downloader with automated cross-platform setup that puts you in complete control of your downloads. Choose your exact video quality, download entire playlists or channels, and enjoy lightning-fast concurrent processing with full FFmpeg integration.
 
-**Built on the foundation of:** [Download-Simply-Videos-From-YouTube](https://github.com/pH-7/Download-Simply-Videos-From-YouTube) by Pierre-Henry Soria, extensively enhanced and modernized.
+**Built on the foundation of:** [Download-Simply-Videos-From-YouTube](https://github.com/pH-7/Download-Simply-Videos-From-YouTube) by Pierre-Henry Soria, extensively enhanced and modernized with automated setup capabilities.
 
 ## ✨ Key Features
 - 🎯 **Interactive Quality Selection** - Choose from 144p to 4K with real-time detection
@@ -36,6 +36,28 @@ A powerful, feature-rich YouTube downloader that puts you in complete control of
 - Internet connection for downloads 🌐
 
 ## 📦 Installation
+
+### 🚀 **One-Click Setup (Recommended)**
+
+Choose any of these methods - they all do the same thing automatically:
+
+**🌟 Universal Method (Works Everywhere):**
+```bash
+python launcher.py
+```
+
+**💻 Platform-Specific:**
+- **Windows**: Double-click `RUN.bat` 
+- **macOS/Linux**: Double-click `RUN.sh`
+
+**✨ What the scripts do automatically:**
+- ✅ Create Python virtual environment
+- ✅ Install all required packages
+- ✅ Check FFmpeg availability  
+- ✅ Launch the YouTube downloader
+- ✅ Handle all error cases gracefully
+
+### 🛠️ **Manual Installation**
 
 1. **Clone this repository**
    ```bash
@@ -84,8 +106,15 @@ A powerful, feature-rich YouTube downloader that puts you in complete control of
 
 ## 🚀 Quick Start
 
+### ⚡ **Super Easy (One-Click)**
+1. **Windows**: Double-click `RUN.bat`
+2. **macOS/Linux**: Double-click `RUN.sh`
+3. Follow the prompts to download your videos!
+
+### 💻 **Manual Usage**
 **Basic Usage:**
 ```bash
+# Activate your virtual environment first
 python download.py
 ```
 
@@ -94,18 +123,20 @@ python download.py
 📥 YouTube Multi-Content Downloader
 Enter YouTube URL(s): https://www.youtube.com/watch?v=EXAMPLE_ID
 
-Choose format:
-  1. MP4 Video (default)
-  2. MP3 Audio only  
-  3. Interactive resolution choice
-Enter choice (1-3): 3
+Choose download mode:
+  1. Auto Quality MP4 Video (1080p max, default)
+  2. Choose Video Quality (144p to 4K)
+  3. MP3 Audio Only
+Enter choice (1-3): 2
 
 📺 Available Video Resolutions:
-  1. 4K (2160p) (~342MB)
-  2. 1080p (Full HD) (~76MB) 
-  3. 720p (HD) (~25MB)
-  4. 480p (~13MB)
-Choose resolution (1-4): 2
+  1. 4K (2160p) (3840x2160) @ 60fps (~333.9MB)
+  2. 1440p (2K) (2560x1440) @ 60fps (~187.9MB)  
+  3. 1080p (Full HD) (1920x1080) @ 60fps (~76.1MB)
+  4. 720p (HD) (1280x720) @ 60fps (~49.1MB)
+  [... more options ...]
+Choose resolution (1-9): 3
+✅ Selected: 1080p (Full HD)
 ```
 
 ## 🎯 Interactive Quality Selection

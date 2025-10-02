@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+"""
+YouTube Downloader Pro - Advanced YouTube Content Downloader
+
+A powerful, feature-rich YouTube downloader with interactive quality selection,
+concurrent processing, and support for videos, playlists, and channels.
+
+Author: AdemCE-eng
+Based on: Download-Simply-Videos-From-YouTube by Pierre-Henry Soria
+License: MIT
+Repository: https://github.com/AdemCE-eng/Youtube-downloader-pro
+"""
+
 import os
 import sys
 import re
@@ -8,6 +21,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 import platform
 import shutil
+
+
+# ====================================================================
+# FFmpeg Detection and Configuration
+# ====================================================================
 
 
 def detect_ffmpeg_location():
@@ -52,6 +70,10 @@ def detect_ffmpeg_location():
     # If not found, return None (will rely on PATH)
     return None
 
+
+# ====================================================================
+# URL Analysis and Content Detection
+# ====================================================================
 
 @lru_cache(maxsize=128)
 def get_url_info(url: str) -> Tuple[str, Dict]:
@@ -441,6 +463,10 @@ def choose_general_resolution() -> str:
             print("❌ Please enter a valid number")
 
 
+# ====================================================================
+# Quality Selection and Format Detection
+# ====================================================================
+
 def get_available_formats(url: str) -> None:
     """
     List available formats for debugging purposes.
@@ -459,6 +485,10 @@ def get_available_formats(url: str) -> None:
     except Exception as e:
         print(f"Error listing formats: {str(e)}")
 
+
+# ====================================================================
+# Download Functions
+# ====================================================================
 
 def download_single_video(url: str, output_path: str, thread_id: int = 0, audio_only: bool = False, format_selector: Optional[str] = None) -> dict:
     """
@@ -726,6 +756,10 @@ def download_youtube_content(urls: List[str], output_path: Optional[str] = None,
         print(f"\n🎉 All files saved to: {output_path}")
 
 
+# ====================================================================
+# Main Application Entry Point
+# ====================================================================
+
 if __name__ == "__main__":
     # Check for command line arguments
     if len(sys.argv) > 1 and sys.argv[1] == '--list-formats':
@@ -787,29 +821,32 @@ if __name__ == "__main__":
 
         # Ask for format preference
         format_choice = input(
-            "\nChoose format:\n"
-            "  1. MP4 Video (default)\n"
-            "  2. MP3 Audio only\n"
-            "  3. Interactive resolution choice\n"
+            "\nChoose download mode:\n"
+            "  1. Auto Quality MP4 Video (1080p max, default)\n"
+            "  2. Choose Video Quality (144p to 4K)\n"
+            "  3. MP3 Audio Only\n"
             "Enter choice (1-3, default=1): ").strip()
 
         audio_only = False
         interactive_resolution = False
         
         if format_choice == '2':
-            audio_only = True
-            print("🎵 Selected: MP3 Audio only")
-        elif format_choice == '3':
             interactive_resolution = True
-            print("🎯 Selected: Interactive resolution choice")
+            print("🎯 Selected: Choose Video Quality")
+        elif format_choice == '3':
+            audio_only = True
+            print("🎵 Selected: MP3 Audio Only")
         else:
-            print("🎥 Selected: MP4 Video")
+            print("🎥 Selected: Auto Quality MP4 Video (1080p max)")
 
         # Only ask for concurrent workers if there are multiple URLs
         max_workers = 1  # Default for single URL
         if len(urls) > 1:
+            print(f"\n⚡ You're downloading {len(urls)} videos/playlists")
+            print("💡 Concurrent downloads = downloading multiple videos at the same time (faster)")
+            print("⚠️  Higher numbers = faster but uses more internet/CPU")
             workers_input = input(
-                "Number of concurrent downloads (1-5, default=3): ").strip()
+                "How many videos to download simultaneously? (1-5, default=3): ").strip()
             try:
                 max_workers = int(workers_input) if workers_input else 3
                 max_workers = max(1, min(5, max_workers))  # Clamp between 1-5
@@ -818,9 +855,9 @@ if __name__ == "__main__":
 
         print(f"\n🎬 Starting downloads...")
         print(f"📊 URLs to download: {len(urls)}")
-        print(f"🎧 Format: {'MP3 Audio' if audio_only else ('Interactive Resolution' if interactive_resolution else 'MP4 Video')}")
+        print(f"🎧 Format: {'MP3 Audio' if audio_only else ('Choose Quality' if interactive_resolution else 'Auto Quality MP4 (1080p max)')}")
         if len(urls) > 1:
-            print(f"⚡ Concurrent workers: {max_workers}")
+            print(f"⚡ Simultaneous downloads: {max_workers}")
         print(
             f"📁 Output: {output_dir if output_dir else 'default (./downloads)'}")
 

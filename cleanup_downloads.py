@@ -1,9 +1,28 @@
 #!/usr/bin/env python3
 """
-Cleanup script for incomplete YouTube downloads
+Project File Cleanup Utility
+============================
+
+A utility script for cleaning up download files and managing the project structure.
+
+Features:
+- Cleans downloaded video files and incomplete downloads
+- Removes temporary files (.part, .ytdl, .temp)
+- Maintains project organization
+- Cross-platform compatible
+
+Author: YouTube Downloader Project
+License: MIT License
+Python Version: 3.7+
 """
+
 import os
 import glob
+
+
+# ====================================================================
+# File Cleanup and Management
+# ====================================================================
 
 
 def cleanup_incomplete_downloads(downloads_dir="downloads"):
